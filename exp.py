@@ -22,10 +22,10 @@ import pandas as pd
 
 with closing(connect(r"DB\Sales_data.db")) as conn:
    
-    query = "SELECT * FROM inference_results;"
+    query = "SELECT * FROM Sales_Data;"
     data_df = pd.read_sql_query(query, conn)
 
-print("DataFrame info:", data_df.tail())
+print("DataFrame info:", data_df)
 #print("DataFrame info:", data_df.info())
 
 #     #data_df = pd.DataFrame(cursor.fetchall())

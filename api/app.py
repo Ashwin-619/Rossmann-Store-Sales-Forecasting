@@ -8,6 +8,28 @@ from src.inference.predictor import TwoStageModelPipeline
 from src.database.storing_data import save_inference_data
 from src.database.inference_to_main import inference_to_main
 
+
+import os
+import urllib.request
+
+ARTIFACTS = {
+    "DB/Sales_data.db": "https://github.com/Ashwin-619/Rossmann-Store-Sales-Forecasting/releases/download/v1.0.0/Sales_data.db",
+    "models/sales_final_model.pkl": "https://github.com/Ashwin-619/Rossmann-Store-Sales-Forecasting/releases/download/v1.0.0/sales_final_model.pkl",
+    "models/customer_final_model.pkl": "https://github.com/Ashwin-619/Rossmann-Store-Sales-Forecasting/releases/download/v1.0.0/customer_final_model.pkl",
+    "models/categorical_schemas.pkl": "https://github.com/Ashwin-619/Rossmann-Store-Sales-Forecasting/releases/download/v1.0.0/categorical_schemas.pkl"
+}
+
+def download_missing_artifacts():
+    for filepath, url in ARTIFACTS.items():
+        if not os.path.exists(filepath):
+            os.makedirs(os.path.dirname(filepath), exist_ok=True)
+            print(f"Downloading {filepath} (first-time setup)...")
+            urllib.request.urlretrieve(url, filepath)
+            print(f"Saved {filepath}")
+
+download_missing_artifacts()
+
+
 app = FastAPI()
 
 feature_pipeline = FeaturePipeline()
